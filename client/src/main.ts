@@ -78,8 +78,8 @@ const debug: DebugSettings = {
 };
 
 let engine: GameEngine | null = null;
-let respawn = () => undefined;
-let updateGraphics = (_next: GraphicsSettings) => undefined;
+let respawn: () => void = () => {};
+let updateGraphics: (next: GraphicsSettings) => void = () => {};
 
 menuBtn.addEventListener('click', () => {
   settingsPanel.hidden = !settingsPanel.hidden;
