@@ -96,6 +96,79 @@ export const createResortScene = (
   shadowGenerator.useBlurExponentialShadowMap = true;
   shadowGenerator.blurKernel = 24;
 
+  const mountainMat = new StandardMaterial('mountainMat', scene);
+  mountainMat.diffuseColor = new Color3(0.72, 0.79, 0.88);
+  mountainMat.specularColor = new Color3(0.2, 0.22, 0.25);
+
+  const ridgePeaks = [
+    { x: -62, z: 74, h: 36, r: 26 },
+    { x: -28, z: 88, h: 42, r: 30 },
+    { x: 12, z: 82, h: 34, r: 24 },
+    { x: 46, z: 72, h: 39, r: 28 },
+    { x: 70, z: 92, h: 32, r: 22 }
+  ];
+  ridgePeaks.forEach((peak, index) => {
+    const mountain = MeshBuilder.CreateCylinder(
+      `ridge-${index}`,
+      { diameterTop: 1.5, diameterBottom: peak.r, height: peak.h, tessellation: 6 },
+      scene
+    );
+    mountain.position.set(peak.x, peak.h * 0.42, peak.z);
+    mountain.rotation.y = Math.PI * (index * 0.17);
+    mountain.material = mountainMat;
+    mountain.receiveShadows = true;
+  });
+
+  const lodgeBaseMat = new StandardMaterial('lodgeBaseMat', scene);
+  lodgeBaseMat.diffuseColor = new Color3(0.45, 0.31, 0.21);
+  const lodgeRoofMat = new StandardMaterial('lodgeRoofMat', scene);
+  lodgeRoofMat.diffuseColor = new Color3(0.28, 0.1, 0.09);
+  const lodgeWindowMat = new StandardMaterial('lodgeWindowMat', scene);
+  lodgeWindowMat.diffuseColor = new Color3(0.9, 0.76, 0.42);
+  lodgeWindowMat.emissiveColor = new Color3(0.25, 0.2, 0.07);
+
+  const lodgeLayout = [
+    { x: -18, z: -42, width: 7, depth: 5, height: 3.6 },
+    { x: 15, z: -48, width: 8.5, depth: 6, height: 4 },
+    { x: 32, z: -36, width: 6, depth: 4.5, height: 3.2 }
+  ];
+  lodgeLayout.forEach((lodge, index) => {
+    const base = MeshBuilder.CreateBox(`lodge-base-${index}`, { width: lodge.width, depth: lodge.depth, height: lodge.height }, scene);
+    base.position.set(lodge.x, lodge.height * 0.5, lodge.z);
+    base.material = lodgeBaseMat;
+    base.receiveShadows = true;
+
+    const roof = MeshBuilder.CreateCylinder(
+      `lodge-roof-${index}`,
+      { diameterTop: 0, diameterBottom: lodge.width * 1.25, height: lodge.height * 0.95, tessellation: 4 },
+      scene
+    );
+    roof.position.set(lodge.x, lodge.height + lodge.height * 0.38, lodge.z);
+    roof.rotation.y = Math.PI * 0.25;
+    roof.material = lodgeRoofMat;
+
+    const window = MeshBuilder.CreatePlane(`lodge-window-${index}`, { width: lodge.width * 0.28, height: lodge.height * 0.22 }, scene);
+    window.position.set(lodge.x, lodge.height * 0.58, lodge.z + lodge.depth * 0.52);
+    window.material = lodgeWindowMat;
+  });
+
+  const pineTrunkMat = new StandardMaterial('pineTrunkMat', scene);
+  pineTrunkMat.diffuseColor = new Color3(0.35, 0.24, 0.15);
+  const pineLeafMat = new StandardMaterial('pineLeafMat', scene);
+  pineLeafMat.diffuseColor = new Color3(0.18, 0.33, 0.24);
+
+  for (let i = 0; i < 28; i++) {
+    const x = -52 + (i % 14) * 8;
+    const z = i < 14 ? -56 - (i % 6) * 4 : -2 + (i % 7) * 9;
+    const trunk = MeshBuilder.CreateCylinder(`pine-trunk-${i}`, { diameter: 0.35, height: 2.2 }, scene);
+    trunk.position.set(x, 1.1, z);
+    trunk.material = pineTrunkMat;
+
+    const canopy = MeshBuilder.CreateCylinder(`pine-canopy-${i}`, { diameterTop: 0.2, diameterBottom: 2.4, height: 4.4, tessellation: 7 }, scene);
+    canopy.position.set(x, 3.9, z);
+    canopy.material = pineLeafMat;
+  }
+
   for (let i = 0; i < 16; i++) {
     const lane = i % 2 === 0 ? -4 : 4;
     const z = 58 - i * 6.5;
