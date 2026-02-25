@@ -23,7 +23,7 @@ export class PlayerController {
     private readonly scene: Scene,
     private readonly input: InputManager,
     avatarSelection: AvatarSelection,
-    private readonly debugSettings: DebugSettings,
+    debugSettings: DebugSettings,
     private readonly groundMeshes: AbstractMesh[]
   ) {
     this.avatar = new Avatar(scene, avatarSelection);

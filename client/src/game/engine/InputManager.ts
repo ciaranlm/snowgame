@@ -3,7 +3,7 @@ export class InputManager {
   private pointerDeltaX = 0;
   private pointerLocked = false;
 
-  constructor(private readonly canvas: HTMLCanvasElement, private readonly sensitivity: () => number) {
+  constructor(canvas: HTMLCanvasElement, private readonly sensitivity: () => number) {
     window.addEventListener('keydown', (event) => {
       this.keys.add(event.key.toLowerCase());
     });

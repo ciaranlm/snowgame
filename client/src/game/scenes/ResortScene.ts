@@ -13,7 +13,7 @@ import {
   StandardMaterial,
   Texture,
   Vector3,
-  VertexData
+  VertexBuffer
 } from '@babylonjs/core';
 import type { AvatarSelection, DebugSettings, GraphicsSettings, InteractionTarget, RemotePlayerStub } from '../types';
 import { InputManager } from '../engine/InputManager';
@@ -64,7 +64,7 @@ export const createResortScene = (
   snowMat.bumpTexture.level = 0.15;
 
   const terrain = MeshBuilder.CreateGround('terrain', { width: 120, height: 140, subdivisions: 80 }, scene);
-  const positions = terrain.getVerticesData(VertexData.PositionKind)!;
+  const positions = terrain.getVerticesData(VertexBuffer.PositionKind)!;
   for (let i = 0; i < positions.length; i += 3) {
     const x = positions[i];
     const z = positions[i + 2];
@@ -72,7 +72,7 @@ export const createResortScene = (
     const plazaFlatten = Math.exp(-((x * x) / 480 + ((z + 32) * (z + 32)) / 180));
     positions[i + 1] = hill * 0.9 - plazaFlatten * 4 + Math.sin(x * 0.2) * 0.1;
   }
-  terrain.setVerticesData(VertexData.PositionKind, positions);
+  terrain.setVerticesData(VertexBuffer.PositionKind, positions);
   terrain.convertToFlatShadedMesh();
   terrain.material = snowMat;
   terrain.receiveShadows = true;

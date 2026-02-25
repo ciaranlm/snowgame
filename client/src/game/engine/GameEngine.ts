@@ -7,7 +7,7 @@ export class GameEngine {
   private readonly scene: Scene;
 
   constructor(
-    private readonly canvas: HTMLCanvasElement,
+    canvas: HTMLCanvasElement,
     avatarSelection: AvatarSelection,
     graphics: GraphicsSettings,
     debug: DebugSettings,
