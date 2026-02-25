@@ -1,6 +1,6 @@
 # Snowy Hamster Hangout
 
-A Babylon.js + TypeScript cozy browser prototype with hamster avatars, sledding, snowboarding, snowball throwing, and a winter resort sandbox. v2
+A Babylon.js + TypeScript cozy browser prototype with hamster avatars, sledding, snowboarding, snowball throwing, and a winter resort sandbox. 
 
 ## Run locally
 ```bash
